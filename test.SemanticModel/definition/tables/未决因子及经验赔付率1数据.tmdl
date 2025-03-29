@@ -1,0 +1,57 @@
+table 未决因子及经验赔付率1数据
+	lineageTag: e9504396-ac5b-43f5-8019-dc46506cd137
+
+	column 险类
+		dataType: string
+		lineageTag: 9c5bf97e-c109-41e8-a8d6-714b34813d29
+		summarizeBy: none
+		sourceColumn: 险类
+
+		annotation SummarizationSetBy = Automatic
+
+	column 年
+		dataType: int64
+		formatString: 0
+		lineageTag: 50838cdf-8876-4dfc-b9de-996d91e57f8a
+		summarizeBy: sum
+		sourceColumn: 年
+
+		annotation SummarizationSetBy = Automatic
+
+	column 经验赔付率
+		dataType: double
+		lineageTag: e7d67fd6-67a8-4e0a-8342-d7fafa56930a
+		summarizeBy: sum
+		sourceColumn: 经验赔付率
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 机构
+		dataType: string
+		lineageTag: 8b007c3d-73ed-4211-a990-31552e016304
+		summarizeBy: none
+		sourceColumn: 机构
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key = '未决因子及经验赔付率1数据'[年]&"-"&'未决因子及经验赔付率1数据'[机构]&"-"&'未决因子及经验赔付率1数据'[险类]
+		lineageTag: d375cfdd-9ccb-4b48-a4da-674a356dff4e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 未决因子及经验赔付率1数据 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\wa\OneDrive\PBI\新华\填报表单结构.xlsx"), null, true),
+				    未决因子及经验赔付率1数据_Sheet = Source{[Item="未决因子及经验赔付率1数据",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(未决因子及经验赔付率1数据_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"险类", type text}, {"年", Int64.Type}, {"经验赔付率", type number}, {"机构", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

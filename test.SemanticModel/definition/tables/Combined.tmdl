@@ -1,0 +1,137 @@
+table Combined
+	lineageTag: 7948e7ee-14d0-43ec-91b4-68a37b3d2994
+
+	column 类别
+		lineageTag: e5920c05-f3dd-4d48-a283-294be3472755
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: 未决因子及经验赔付率2数据[类别]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 区间
+		lineageTag: 9e06dfc0-e001-4016-9a11-35d7c041ce4c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: 未决因子及经验赔付率2数据[区间]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value
+		lineageTag: 1a366d49-86d3-4598-b150-22650d52699b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: 未决因子及经验赔付率2数据[Value]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 机构
+		lineageTag: 3bfedd16-0e55-4e77-8b68-4e2f0d41e653
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: 未决因子及经验赔付率2数据[机构]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key
+		formatString: 0
+		lineageTag: 32b2a0da-8fa9-4c8a-8a2f-3623d0db8250
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: 未决因子及经验赔付率2数据[Key]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Period
+		formatString: 0
+		lineageTag: 640e4c5f-184f-42ae-b989-e6da981b5ea4
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: 未决因子及经验赔付率2数据[Period]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 经过保费
+		lineageTag: a2c4d062-7258-44fb-b76f-c26e1e01bd87
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: 经过保费combined[经过保费]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		lineageTag: ff7a35b5-2a37-47c4-a040-653b5f42b401
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: 经过保费combined[Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 保单号
+		lineageTag: 7d19a348-ba72-4bb4-9c69-3a28048c4a30
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: 经过保费combined[保单号]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date2
+		lineageTag: 67733972-f3f0-4db9-a908-c1a5e6157024
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: 经过保费combined[Date2]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 保单号2
+		lineageTag: cd87c6c2-d095-4741-b365-e0e7adc31237
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: 经过保费combined[保单号2]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 经过保费2
+		lineageTag: 1aec272b-31ae-4b55-a5aa-bf0b08587a49
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: 经过保费combined[经过保费2]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 日期相减
+		formatString: 0
+		lineageTag: 929afdf2-4ed3-4e06-9845-8dd7e9abcdc7
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: 经过保费combined[日期相减]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 日期差相等 = 'Combined'[日期相减]='Combined'[Period]
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: dc6af6d3-427e-4ae5-b4e0-17e959bc1fb5
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column SumProduct = 'Combined'[经过保费2]*'Combined'[Value]
+		lineageTag: abe5eacb-8b07-4d0d-83bd-024079e040d4
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Combined = calculated
+		mode: import
+		source = CROSSJOIN('经过保费combined','未决因子及经验赔付率2数据')
+
+	annotation PBI_Id = ded69220c4e948d191807ee38898bb1b
+

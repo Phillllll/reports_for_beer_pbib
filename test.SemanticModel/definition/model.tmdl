@@ -1,0 +1,29 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: zh-CN
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["费用支出数据","经过保费数据","未到期保费数据","未决因子及经验赔付率1数据","未决因子及经验赔付率2数据","月度短险保费数据","已决赔款数据","经过保费数据 (2)"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.139.1678.0 (24.12)+2a034ab280bddf891eb7bb9ebfe6996f9c3a3196
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 费用支出数据
+ref table 经过保费数据
+ref table 未到期保费数据
+ref table 未决因子及经验赔付率1数据
+ref table 未决因子及经验赔付率2数据
+ref table 月度短险保费数据
+ref table 已决赔款数据
+ref table Combined
+ref table '经过保费数据 (2)'
+ref table 经过保费combined
+
+ref cultureInfo en-US
+

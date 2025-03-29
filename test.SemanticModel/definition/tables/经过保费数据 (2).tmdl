@@ -1,0 +1,50 @@
+table '经过保费数据 (2)'
+	lineageTag: 8b3780c2-ed50-414e-abfa-c4c32e7d41ca
+
+	column Date2
+		dataType: string
+		lineageTag: d85d4cb4-5e20-49a2-a5c6-571620aa5c65
+		summarizeBy: none
+		sourceColumn: Date2
+
+		annotation SummarizationSetBy = Automatic
+
+	column 保单号2
+		dataType: string
+		lineageTag: b505d92c-4b9d-4a63-9e21-5575926c9125
+		summarizeBy: none
+		sourceColumn: 保单号2
+
+		annotation SummarizationSetBy = Automatic
+
+	column 经过保费2
+		dataType: double
+		lineageTag: afbb93e6-4dc4-4bcc-aeae-ec6fca9a8649
+		summarizeBy: none
+		sourceColumn: 经过保费2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition '经过保费数据 (2)' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\wa\OneDrive\PBI\新华\填报表单结构.xlsx"), null, true),
+				    经过保费数据_Sheet = Source{[Item="经过保费数据",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(经过保费数据_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"法人产品新类别", type text}, {"Value", type number}, {"Year", Int64.Type}, {"Month", Int64.Type}, {"机构", type text}}),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Changed Type", "Date", each Text.Combine({Text.From([Year], "zh-CN"), "/", Text.From([Month], "zh-CN"), "/1"}), type text),
+				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Merged Column",{{"Value", "经过保费"}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Renamed Columns", each ([法人产品新类别] = "非健康险")),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"保单号", "经过保费", "Date"}),
+				    #"Grouped Rows" = Table.Group(#"Removed Other Columns", {"Date", "保单号"}, {{"经过保费", each List.Sum([经过保费]), type nullable number}}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Grouped Rows",{{"Date", "Date2"}, {"保单号", "保单号2"}, {"经过保费", "经过保费2"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

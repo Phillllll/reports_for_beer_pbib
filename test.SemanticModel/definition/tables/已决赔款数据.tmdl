@@ -1,0 +1,59 @@
+table 已决赔款数据
+	lineageTag: 3d305171-701b-4f3e-b473-a0ceb0186d1d
+
+	column Value
+		dataType: decimal
+		formatString: "¥"#,0.###############;"¥"-#,0.###############;"¥"#,0.###############
+		lineageTag: 39f7e73c-6403-4d63-8bef-1bd9c9654edc
+		summarizeBy: sum
+		sourceColumn: Value
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"currencyCulture":"zh-CN"}
+
+	column Year
+		dataType: string
+		lineageTag: a9e94007-cb4f-492e-a7ff-b56ad8cc2d5b
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: string
+		lineageTag: 79b80a82-75a3-4f9e-bb6f-98f74cd92406
+		summarizeBy: none
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column 机构
+		dataType: string
+		lineageTag: 55517cf4-0c70-470d-bec4-3fcedf3eefa0
+		summarizeBy: none
+		sourceColumn: 机构
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key = '已决赔款数据'[Year]&"-"&'已决赔款数据'[Month]&"-"&'已决赔款数据'[机构]
+		lineageTag: eb799685-8b5d-49f1-9f55-f9e11b8d17ce
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 已决赔款数据 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\wa\OneDrive\PBI\新华\填报表单结构.xlsx"), null, true),
+				    已决赔款数据_Sheet = Source{[Item="已决赔款数据",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(已决赔款数据_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Value", Currency.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

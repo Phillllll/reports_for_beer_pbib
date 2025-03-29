@@ -1,0 +1,99 @@
+table 月度短险保费数据
+	lineageTag: 1d1a0eeb-64fb-470e-a47e-6362f57c85b1
+
+	measure 短险创费 = calculate(sum('月度短险保费数据'[Value]),'月度短险保费数据'[短险]="Y")*0.94+calculate(sum('月度短险保费数据'[Value]),'月度短险保费数据'[短险]="N")*0.99
+		lineageTag: e27c92eb-4bca-48a1-a75d-ba123c5cb855
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 短信占比 = calculate(sum('月度短险保费数据'[Value]),'月度短险保费数据'[短险]="Y")/sum('月度短险保费数据'[Value])
+		lineageTag: 0e17e27f-4d01-4b3c-86a0-e3264d7904aa
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 长险创费 = ""
+		lineageTag: 8935d45d-2e0a-4962-8001-8caf248b03f9
+
+	measure 总公司划拨 = ""
+		lineageTag: 2c42cab9-cb66-47ec-8644-7ae7ae97b3a4
+
+	measure 其他收入 = ""
+		lineageTag: d7ead9d7-f0c4-49d1-a323-387791b1782a
+
+	column 险种类型
+		dataType: string
+		lineageTag: 5c13f622-1dbf-44b5-a45f-473027c1f11e
+		summarizeBy: none
+		sourceColumn: 险种类型
+
+		annotation SummarizationSetBy = Automatic
+
+	column Value
+		dataType: double
+		lineageTag: 1e7cec14-6710-4401-a17f-01cd3a3264d9
+		summarizeBy: sum
+		sourceColumn: Value
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 机构
+		dataType: string
+		lineageTag: f5042390-109d-47c4-8424-d7f487597fab
+		summarizeBy: none
+		sourceColumn: 机构
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 2bf690c2-2542-47a8-b7d7-4740091c12e6
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month
+		dataType: int64
+		formatString: 0
+		lineageTag: 82bc8f52-15dc-4653-9a54-cb82d7e331f6
+		summarizeBy: sum
+		sourceColumn: Month
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key = '月度短险保费数据'[Year]&"-"&'月度短险保费数据'[Month]&"-"&'月度短险保费数据'[机构]&"-"&'月度短险保费数据'[险种类型]
+		lineageTag: ee5413d2-145c-4bbd-adfc-cd4fe2a5d2ce
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_2 = '月度短险保费数据'[Year]&"-"&'月度短险保费数据'[Month]&"-"&'月度短险保费数据'[机构]
+		lineageTag: 78343158-77e0-443e-8ea0-60cffb31b449
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 短险 = if('月度短险保费数据'[险种类型]="非健康险"||'月度短险保费数据'[险种类型]="非企补健康险"||'月度短险保费数据'[险种类型]="极短期险","Y","N")
+		lineageTag: 1a3e01fa-0991-4865-9ea0-7675adcf7fbc
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 月度短险保费数据 = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\wa\OneDrive\PBI\新华\填报表单结构.xlsx"), null, true),
+				    月度短险保费数据_Sheet = Source{[Item="月度短险保费数据",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(月度短险保费数据_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"险种类型", type text}, {"Value", type number}, {"机构", type text}, {"Year", Int64.Type}, {"Month", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

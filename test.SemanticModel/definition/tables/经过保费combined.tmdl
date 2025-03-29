@@ -1,0 +1,68 @@
+table 经过保费combined
+	lineageTag: 94109db1-3081-4230-a07b-e5cf3abbc3a6
+
+	column 经过保费
+		lineageTag: 6fa2ac52-e0a4-4518-be43-753cf673eb6b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: 经过保费数据[经过保费]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		lineageTag: ad4befac-e6ca-4af5-9077-6ff9b33d7ac2
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: 经过保费数据[Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 保单号
+		lineageTag: 233b161e-3826-4b52-baf9-42500e85080a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: 经过保费数据[保单号]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date2
+		lineageTag: e4d3ef65-454e-4b98-a1e2-d81fe4777999
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: 经过保费数据 (2)[Date2]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 保单号2
+		lineageTag: 2a6d2aac-d727-490f-858f-b3d1b8b7040a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: 经过保费数据 (2)[保单号2]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 经过保费2
+		lineageTag: cdb264f8-d079-45fc-92f9-a007de43ef3a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: 经过保费数据 (2)[经过保费2]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 日期相减 = -datediff('经过保费combined'[Date],'经过保费combined'[Date2],MONTH)
+		formatString: 0
+		lineageTag: bbc4979f-19ee-48ec-9b5d-5acc1f7e8851
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 经过保费combined = calculated
+		mode: import
+		source = crossjoin('经过保费数据','经过保费数据 (2)')
+
+	annotation PBI_Id = 18beed6187e04ccd9c9bed23ae5f1dd4
+

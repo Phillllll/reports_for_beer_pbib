@@ -1,0 +1,205 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.5.0/schema.json",
+  "name": "02577a4c8c0b34abad17",
+  "position": {
+    "x": 96.500711237553347,
+    "y": 196.6429587482219,
+    "z": 0,
+    "height": 101.96301564722617,
+    "width": 721.02418207681364,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "月度短险保费数据"
+                    }
+                  },
+                  "Property": "Year"
+                }
+              },
+              "queryRef": "Sum(月度短险保费数据.Year)",
+              "nativeQueryRef": "Year"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "月度短险保费数据"
+                        }
+                      },
+                      "Property": "Value"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "月度短险保费数据.Value",
+              "nativeQueryRef": "短险保费",
+              "displayName": "短险保费"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "月度短险保费数据"
+                    }
+                  },
+                  "Property": "短险创费"
+                }
+              },
+              "queryRef": "月度短险保费数据.短险创费",
+              "nativeQueryRef": "短险创费"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "月度短险保费数据"
+                    }
+                  },
+                  "Property": "短信占比"
+                }
+              },
+              "queryRef": "月度短险保费数据.短信占比",
+              "nativeQueryRef": "短信占比"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "月度短险保费数据"
+                    }
+                  },
+                  "Property": "长险创费"
+                }
+              },
+              "queryRef": "月度短险保费数据.长险创费",
+              "nativeQueryRef": "长险创费"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "月度短险保费数据"
+                    }
+                  },
+                  "Property": "总公司划拨"
+                }
+              },
+              "queryRef": "月度短险保费数据.总公司划拨",
+              "nativeQueryRef": "总公司划拨"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "月度短险保费数据"
+                    }
+                  },
+                  "Property": "其他收入"
+                }
+              },
+              "queryRef": "月度短险保费数据.其他收入",
+              "nativeQueryRef": "其他收入"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "已决赔款数据"
+                        }
+                      },
+                      "Property": "Value"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(已决赔款数据.Value)",
+              "nativeQueryRef": "已决赔款",
+              "displayName": "已决赔款"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "cf3096fad2ac38736560",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "月度短险保费数据"
+              }
+            },
+            "Property": "Year"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "月",
+              "Entity": "月度短险保费数据",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "月"
+                          }
+                        },
+                        "Property": "Year"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "2024L"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

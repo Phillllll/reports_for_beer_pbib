@@ -1,0 +1,10 @@
+relationship 43a27f34-0461-da8d-3349-5b2c72556222
+	fromColumn: 月度短险保费数据.Key_2
+	toColumn: 已决赔款数据.Key
+
+relationship AutoDetected_1b23ca89-605b-49f8-a2d5-901a273e3244
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: '经过保费数据 (2)'.经过保费2
+	toColumn: 经过保费数据.经过保费
+
