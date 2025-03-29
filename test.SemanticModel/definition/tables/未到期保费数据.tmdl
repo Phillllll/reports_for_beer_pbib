@@ -63,7 +63,11 @@ table 未到期保费数据
 		mode: import
 		source =
 				let
+<<<<<<< HEAD
 				    Source = Excel.Workbook(File.Contents("C:\Users\wa\OneDrive\PBI\reports_for_beer_pbib\填报表单结构.xlsx"), null, true),
+=======
+				    Source = Excel.Workbook(File.Contents("D:\Git\reports_for_beer_pbib\填报表单结构.xlsx"), null, true),
+>>>>>>> 42d4a0d6831d849109d381b21a3064667447500a
 				    未到期保费数据_Sheet = Source{[Item="未到期保费数据",Kind="Sheet"]}[Data],
 				    #"Promoted Headers" = Table.PromoteHeaders(未到期保费数据_Sheet, [PromoteAllScalars=true]),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"公司类型", type text}, {"法人产品新类别", type text}, {"Value", type number}, {"Year", Int64.Type}, {"Month", Int64.Type}, {"机构", type text}})
