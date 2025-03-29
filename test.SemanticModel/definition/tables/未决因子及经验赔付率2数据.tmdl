@@ -55,7 +55,7 @@ table 未决因子及经验赔付率2数据
 		mode: import
 		source =
 				let
-				    Source = Excel.Workbook(File.Contents("C:\Users\wa\OneDrive\PBI\新华\填报表单结构.xlsx"), null, true),
+				    Source = Excel.Workbook(File.Contents("C:\Users\wa\OneDrive\PBI\reports_for_beer_pbib\填报表单结构.xlsx"), null, true),
 				    未决因子及经验赔付率2数据_Sheet = Source{[Item="未决因子及经验赔付率2数据",Kind="Sheet"]}[Data],
 				    #"Promoted Headers" = Table.PromoteHeaders(未决因子及经验赔付率2数据_Sheet, [PromoteAllScalars=true]),
 				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"类别", type text}, {"区间", type text}, {"Value", type number}, {"机构", type text}}),

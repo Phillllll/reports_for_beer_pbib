@@ -1,0 +1,54 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.5.0/schema.json",
+  "name": "66f30d8bb9adcc2a2150",
+  "position": {
+    "x": 540.47846889952154,
+    "y": 436.36363636363637,
+    "z": 1002,
+    "height": 150.04784688995215,
+    "width": 451.67464114832541,
+    "tabOrder": 1002
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "费用支出数据"
+                    }
+                  },
+                  "Property": "Month"
+                }
+              },
+              "queryRef": "费用支出数据.Month",
+              "nativeQueryRef": "Month",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Between'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
