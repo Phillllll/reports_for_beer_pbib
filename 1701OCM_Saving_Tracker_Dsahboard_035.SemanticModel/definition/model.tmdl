@@ -1,0 +1,32 @@
+model Model
+	culture: zh-CN
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: zh-CN
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBIDesktopVersion = 2.140.1351.0 (25.02)+9bb96b6a5aee417774126f3416805b86efac121f
+
+annotation PBI_QueryOrder = ["dwd ocm_saving_tracker_stat","dim_ocm_bu","dim_ocm_bu_total","dim_ocm_month","dim_ocm_year","dim_ocm01_cost_cluster","dim_ocm01_cost_group","dim_ocm01_sc_type","dim_ocm01_stat_type","Saving Initiative DB"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'dwd ocm_saving_tracker_stat'
+ref table dim_ocm_bu
+ref table dim_ocm_bu_total
+ref table dim_ocm_month
+ref table dim_ocm_year
+ref table dim_ocm01_cost_cluster
+ref table dim_ocm01_cost_group
+ref table dim_ocm01_sc_type
+ref table dim_ocm01_stat_type
+ref table time_schedule
+ref table 'Saving Initiative DB'
+
+ref role ALL
+
+ref cultureInfo zh-CN
+

@@ -1,0 +1,36 @@
+table dim_ocm01_cost_cluster
+	lineageTag: 60493899-6176-47f5-ba59-720ae9d1665e
+
+	column idx
+		dataType: int64
+		formatString: 0
+		lineageTag: 55b04f52-d2fb-4d87-8096-00bbac53dd23
+		summarizeBy: sum
+		sourceColumn: idx
+
+		annotation SummarizationSetBy = Automatic
+
+	column cost_cluster_name
+		dataType: string
+		lineageTag: 8949c540-38d8-415c-b33d-1b9b29fed408
+		summarizeBy: none
+		sourceColumn: cost_cluster_name
+		sortByColumn: idx
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_ocm01_cost_cluster = m
+		mode: import
+		source =
+				let
+				    源 = Sql.Database("ccncn2acapsql002.341fbc7e928a.database.chinacloudapi.cn", "cn2-cap-datamart"),
+				    dbo_dim_ocm01_cost_cluster = 源{[Schema="dbo",Item="dim_ocm01_cost_cluster"]}[Data],
+				    删除的列 = Table.RemoveColumns(dbo_dim_ocm01_cost_cluster,{"update_time"}),
+				    排序的行 = Table.Sort(删除的列,{{"idx", Order.Ascending}})
+				in
+				    排序的行
+
+	annotation PBI_ResultType = Table
+

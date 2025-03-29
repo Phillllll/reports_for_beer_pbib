@@ -1,0 +1,36 @@
+table dim_ocm_month
+	lineageTag: 62a7fa40-6045-409d-87a8-7e6de78ca68d
+
+	column idx
+		dataType: int64
+		formatString: 0
+		lineageTag: a4ae989b-204b-48b7-b9b0-aef1043110ba
+		summarizeBy: none
+		sourceColumn: idx
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: 2d1fd9e9-a80c-49f7-9c88-1c6641d6a92c
+		summarizeBy: none
+		sourceColumn: month
+		sortByColumn: idx
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_ocm_month = m
+		mode: import
+		source =
+				let
+				    源 = Sql.Database("ccncn2acapsql002.341fbc7e928a.database.chinacloudapi.cn", "cn2-cap-datamart"),
+				    dbo_dim_ocm_month = 源{[Schema="dbo",Item="dim_ocm_month"]}[Data],
+				    删除的列 = Table.RemoveColumns(dbo_dim_ocm_month,{"update_time"})
+				in
+				    删除的列
+
+	annotation PBI_ResultType = Table
+

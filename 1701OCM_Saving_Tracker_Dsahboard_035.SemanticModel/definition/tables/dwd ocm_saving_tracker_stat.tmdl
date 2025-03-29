@@ -1,0 +1,194 @@
+table 'dwd ocm_saving_tracker_stat'
+	lineageTag: dddeb54b-fa37-4223-a1ea-0424087998a1
+
+	measure value_actual = SUM('dwd ocm_saving_tracker_stat'[dimension_actual_value])/1000
+		lineageTag: b590ec48-beb4-45cd-a790-8125c923de2c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure value_target = SUM('dwd ocm_saving_tracker_stat'[dimension_target_value])/1000
+		lineageTag: 101cc991-9892-44f6-bcb2-17637e610d63
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure value_target_fy =
+			CALCULATE([value_target],
+			                        FILTER(ALL('dim_ocm_month'[month]),
+			                                     'dim_ocm_month'[month]>0))
+		lineageTag: f6f1d814-5906-4126-839a-ce346323582f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure value_rate = DIVIDE([value_actual],[value_target])
+		lineageTag: 703a6a01-f265-4125-8259-b8e28d964ad9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure value_rate_fy = DIVIDE([value_actual],[value_target_fy])
+		lineageTag: 12c24052-cc7c-409b-9182-69ac39bd22cc
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure byCG_actual_value = CALCULATE([value_actual],'dim_ocm01_stat_type'[stat_type]="byCG")
+		formatString: #,0.0
+		lineageTag: 828c3857-9878-4fa7-b489-4e18a6293f14
+
+	measure byCG_target_value = CALCULATE([value_target],'dim_ocm01_stat_type'[stat_type]="byCG")
+		formatString: #,0.0
+		lineageTag: caff8f6c-6e89-4fa6-b487-ae6bf4b679e5
+
+	measure byCG_target_value_fy = CALCULATE([value_target_fy],'dim_ocm01_stat_type'[stat_type]="byCG")
+		formatString: #,0.0
+		lineageTag: 6bf7d8c6-db98-45a8-bcdf-696fa0c11d93
+
+	measure byCG_rate = DIVIDE([byCG_actual_value],[byCG_target_value])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 636e821d-1ead-49a1-8a3f-47c6e837c89f
+
+	measure byCG_rate_fy = DIVIDE([byCG_actual_value],[byCG_target_value_fy])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 76127277-1e20-4898-9391-fc536d4eea3c
+
+	measure byCC_actual_value = CALCULATE([value_actual],'dim_ocm01_stat_type'[stat_type]="byCC")
+		formatString: #,0.0
+		lineageTag: 1e4a825a-9270-4c0c-8167-379cbc1655c2
+
+	measure byCC_target_value = CALCULATE([value_target],'dim_ocm01_stat_type'[stat_type]="byCC")
+		formatString: #,0.0
+		lineageTag: ef01b29f-b295-44e8-9e59-41bd885a669e
+
+	measure byCC_target_value_fy = CALCULATE([value_target_fy],'dim_ocm01_stat_type'[stat_type]="byCC")
+		formatString: #,0.0
+		lineageTag: 48de036a-f33b-4ad9-8bd2-efa88f82304a
+
+	measure byCC_rate = DIVIDE([byCC_actual_value],[byCC_target_value])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 48286191-e2f4-4abe-9223-05a4689b7c94
+
+	measure byCC_rate_fy = DIVIDE([byCC_actual_value],[byCC_target_value_fy])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: bca1f02e-29eb-4f8f-8b96-66deac8c736a
+
+	measure byBU_actual_value = CALCULATE([value_actual],'dim_ocm01_stat_type'[stat_type]="byBU")
+		formatString: #,0.0
+		lineageTag: 8e7fa9fe-eb54-4c2d-91d3-fb2ea4726f8b
+
+	measure byBU_target_value = CALCULATE([value_target],'dim_ocm01_stat_type'[stat_type]="byBU")
+		formatString: #,0.0
+		lineageTag: 267e58f3-9269-4361-8677-5a43a04a1426
+
+	measure byBU_target_value_fy = CALCULATE([value_target_fy],'dim_ocm01_stat_type'[stat_type]="byBU")
+		formatString: #,0.0
+		lineageTag: b91f4440-f1f0-4df0-922e-cdcf4772cef4
+
+	measure byBU_rate_fy = DIVIDE([byBU_actual_value],[byBU_target_value_fy])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 8db2c3a4-6feb-479f-b688-03728d788e8b
+
+	measure byBU_rate = DIVIDE([byBU_actual_value],[byBU_target_value])
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: c7069154-ec69-4898-9edd-9b55c9cdd4a6
+
+	measure value_actual2 = SUM('dwd ocm_saving_tracker_stat'[dimension_actual_value])/1000+500
+		lineageTag: 2c6fafd9-5a83-4846-b5ef-d6987e0ad704
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column fact_month
+		dataType: string
+		lineageTag: 4057dc99-b4b8-4731-a772-26223f5c0272
+		summarizeBy: none
+		sourceColumn: fact_month
+
+		annotation SummarizationSetBy = Automatic
+
+	column year
+		dataType: int64
+		formatString: 0
+		lineageTag: 98ca9757-f2f4-4775-b053-da3d7dd4bbb9
+		summarizeBy: none
+		sourceColumn: year
+
+		annotation SummarizationSetBy = Automatic
+
+	column month
+		dataType: int64
+		formatString: 0
+		lineageTag: 441c134f-2f88-4967-82f8-57902edbf725
+		summarizeBy: none
+		sourceColumn: month
+
+		annotation SummarizationSetBy = Automatic
+
+	column bu_t
+		dataType: string
+		lineageTag: 90eda60c-7c11-4139-a4b7-aa3ac1178b7d
+		summarizeBy: none
+		sourceColumn: bu_t
+
+		annotation SummarizationSetBy = Automatic
+
+	column sc_type
+		dataType: string
+		lineageTag: a07622ba-aabd-4cbc-b920-4a09e7ade0ab
+		summarizeBy: none
+		sourceColumn: sc_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column stat_type
+		dataType: string
+		lineageTag: eab30105-19d0-416e-a82f-b7a71364d990
+		summarizeBy: none
+		sourceColumn: stat_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column dimension_name
+		dataType: string
+		lineageTag: 6b492953-6a25-493b-9744-098f32e0f8b5
+		summarizeBy: none
+		sourceColumn: dimension_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column dimension_target_value
+		dataType: double
+		lineageTag: 26d30c87-5a0c-491b-a617-e8c496239746
+		summarizeBy: sum
+		sourceColumn: dimension_target_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dimension_actual_value
+		dataType: double
+		lineageTag: f67dcfbb-3b30-42a4-a86b-be00f78154c0
+		summarizeBy: sum
+		sourceColumn: dimension_actual_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column update_time
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4c1b273a-100f-4b4d-b1b0-d74929dee787
+		summarizeBy: none
+		sourceColumn: update_time
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'dwd ocm_saving_tracker_stat' = m
+		mode: import
+		source =
+				let
+				    源 = Sql.Database("ccncn2acapsql002.341fbc7e928a.database.chinacloudapi.cn", "cn2-cap-datamart"),
+				    dwd_ocm_saving_tracker_stat = 源{[Schema="dwd",Item="ocm_saving_tracker_stat"]}[Data]
+				in
+				    dwd_ocm_saving_tracker_stat
+
+	annotation PBI_ResultType = Table
+

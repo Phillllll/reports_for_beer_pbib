@@ -1,0 +1,46 @@
+table dim_ocm01_sc_type
+	lineageTag: 1ce0206d-742f-46c0-a1f7-f5d8b2fcbde7
+
+	column idx
+		dataType: int64
+		formatString: 0
+		lineageTag: e6f97b75-6349-4fa2-96ad-cc1982989987
+		summarizeBy: none
+		sourceColumn: idx
+
+		annotation SummarizationSetBy = Automatic
+
+	column sc_type
+		dataType: string
+		lineageTag: bcd5b08d-4871-4060-8ee2-6c62cf5e5e5b
+		summarizeBy: none
+		sourceColumn: sc_type
+		sortByColumn: idx
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column sc_type_show
+		dataType: string
+		lineageTag: dc8562a9-fe6d-40a6-9f08-867440cae690
+		summarizeBy: none
+		sourceColumn: sc_type_show
+		sortByColumn: idx
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_ocm01_sc_type = m
+		mode: import
+		source =
+				let
+				    源 = Sql.Database("ccncn2acapsql002.341fbc7e928a.database.chinacloudapi.cn", "cn2-cap-datamart"),
+				    dbo_dim_ocm01_sc_type = 源{[Schema="dbo",Item="dim_ocm01_sc_type"]}[Data],
+				    删除的列 = Table.RemoveColumns(dbo_dim_ocm01_sc_type,{"update_time"})
+				in
+				    删除的列
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,169 @@
+table 'Saving Initiative DB'
+	lineageTag: 91db84b9-e135-481d-86f4-030276c5e1df
+
+	measure 'Achievement vs Target150' = [byCG_rate]-sum('Saving Initiative DB'[OCM Saving Target 150])
+		lineageTag: a1376895-4d5f-44d1-ba3f-a8b59e087595
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Achieved%_50 = [byCG_rate]/sum('Saving Initiative DB'[OCM Saving Target 50])
+		formatString: 0%;-0%;0%
+		lineageTag: c3524ad4-557e-4862-b4bb-0ec608e41b6d
+
+	measure Achieved%_100 = [byCG_rate]/sum('Saving Initiative DB'[OCM Saving Target 100])
+		formatString: 0%;-0%;0%
+		lineageTag: 4085ce5c-ca52-4715-9c90-682230647a0d
+
+	measure Achieved%_150 = [byCG_rate]/sum('Saving Initiative DB'[OCM Saving Target 150])
+		formatString: 0%;-0%;0%
+		lineageTag: c05a3bbb-b34c-43c4-b962-7fd4ddafdb75
+
+	column BU
+		dataType: string
+		lineageTag: c2754a06-d1aa-4826-a8e3-4241f52e2989
+		summarizeBy: none
+		sourceColumn: BU
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: string
+		lineageTag: 7a7d19d3-b687-4ee8-904d-bec540f02733
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department
+		dataType: string
+		lineageTag: 77dd501f-442e-4ef4-95ed-1a6f5ea465d7
+		summarizeBy: none
+		sourceColumn: Department
+
+		annotation SummarizationSetBy = Automatic
+
+	column 8CG
+		dataType: string
+		lineageTag: 1f0d434c-4e93-492f-b9ef-2625548e8603
+		summarizeBy: none
+		sourceColumn: 8CG
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cost Cluster'
+		dataType: string
+		lineageTag: d639cd0a-3ca6-45d0-9899-42bc33426d6a
+		summarizeBy: none
+		sourceColumn: Cost Cluster
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cost Group'
+		dataType: string
+		lineageTag: d7e65288-0f38-4c39-8e17-5902de681563
+		summarizeBy: none
+		sourceColumn: Cost Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Cost Sub Group'
+		dataType: string
+		lineageTag: da8da190-1f6d-4ba5-8b4c-856d2a422b19
+		summarizeBy: none
+		sourceColumn: Cost Sub Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OCM Saving Target 50'
+		dataType: decimal
+		formatString: #,0.00
+		lineageTag: dc969dc2-d048-4ae3-81c5-b6c44fa0cbb2
+		summarizeBy: sum
+		sourceColumn: OCM Saving Target 50
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OCM Saving Target 150'
+		dataType: decimal
+		formatString: #,0.00
+		lineageTag: e35e9ee1-187e-46eb-8d76-7c269e262829
+		summarizeBy: sum
+		sourceColumn: OCM Saving Target 150
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'OCM Saving Target 100'
+		dataType: decimal
+		formatString: #,0.00
+		lineageTag: 41268264-f6e6-4df1-ae08-68dd6edf334a
+		summarizeBy: sum
+		sourceColumn: OCM Saving Target 100
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'E1 YTD'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 7d48b674-31a2-496c-9761-253188bc25ab
+		summarizeBy: sum
+		sourceColumn: E1 YTD
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'E1 YTG'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 2a8b3eee-d9aa-4477-9ddb-6193b25bd149
+		summarizeBy: sum
+		sourceColumn: E1 YTG
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column 'YTG Opportunities'
+		dataType: decimal
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: ef521107-6ea7-4503-bcf3-af3a227faf82
+		summarizeBy: sum
+		sourceColumn: YTG Opportunities
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	column Remark
+		dataType: string
+		lineageTag: 9b09b17c-b51f-4c7b-8c3a-99ca06fb0939
+		summarizeBy: none
+		sourceColumn: Remark
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year2 = right('Saving Initiative DB'[Year],4)
+		dataType: int64
+		formatString: 0
+		lineageTag: ef6b162d-8c16-4416-a424-25ea1ef97787
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Saving Initiative DB' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\EJI\Desktop\pbi\啤酒\OCM saving in Est template2.xlsx"), null, true),
+				    #"Saving Initiative DB_Sheet" = Source{[Item="Saving Initiative DB",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Saving Initiative DB_Sheet", [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"OCM Saving Target 50", Currency.Type}, {"OCM Saving Target 150", Currency.Type}, {"OCM Saving Target 100", Currency.Type}, {"E1 YTD", Currency.Type}, {"E1 YTG", Currency.Type}, {"YTG Opportunities", Currency.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

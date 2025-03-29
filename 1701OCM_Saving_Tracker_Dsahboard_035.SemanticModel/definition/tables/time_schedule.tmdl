@@ -1,0 +1,52 @@
+table time_schedule
+	lineageTag: 8adb80b2-6b98-498d-a7cf-d91466431b7f
+
+	measure time_schedule = DIVIDE(SUM('time_schedule'[当月])-1, 12)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: f570b9b4-b2d4-4efe-8943-f30cdd13c46e
+
+		extendedProperty MeasureTemplate =
+				{
+				  "version": 0,
+				  "daxTemplateName": "MathematicalDivision"
+				}
+
+	column Date
+		formatString: General Date
+		lineageTag: 04a3c90c-2e64-4d25-88a2-54f13f612ddc
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 年月日
+		lineageTag: 882d7f95-9d4e-4bb5-9751-dd5ab6878dee
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [年月日]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 当月
+		dataType: int64
+		formatString: 0
+		lineageTag: f5636770-b33d-4001-8dfd-b39590f27d47
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [当月]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition time_schedule = calculated
+		mode: import
+		source =
+				ADDCOLUMNS(
+				CALENDAR(TODAY(),TODAY()),
+				"年月日",FORMAT([Date],"YYYY-MM-DD"),
+				"当月",FORMAT([Date],"MM")
+				
+				)
+
+	annotation PBI_Id = 4adad7b8e02d4e768d90089cf5d08344
+

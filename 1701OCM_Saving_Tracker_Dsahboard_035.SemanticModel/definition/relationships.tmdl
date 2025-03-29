@@ -1,0 +1,46 @@
+relationship 1b58efa2-327b-4bee-b161-f49d7d0e8118
+	fromColumn: 'dwd ocm_saving_tracker_stat'.year
+	toColumn: dim_ocm_year.year
+
+relationship ce93d4cc-ab3d-4270-b50d-b9d1fd095208
+	fromColumn: 'dwd ocm_saving_tracker_stat'.month
+	toColumn: dim_ocm_month.month
+
+relationship c1f40f2b-42bc-4cfe-95ab-6a848c11e3f2
+	fromColumn: 'dwd ocm_saving_tracker_stat'.bu_t
+	toColumn: dim_ocm_bu.bu_t
+
+relationship bd3a2d11-f46d-4b69-85b6-bc506e1e9c8c
+	fromColumn: 'dwd ocm_saving_tracker_stat'.dimension_name
+	toColumn: dim_ocm_bu_total.bu_dim
+
+relationship c3c735a2-f522-442f-b58d-4d4cd980b73e
+	fromColumn: 'dwd ocm_saving_tracker_stat'.sc_type
+	toColumn: dim_ocm01_sc_type.sc_type
+
+relationship ae78cb08-4f6c-45e6-9cea-aa1435974d5a
+	fromColumn: 'dwd ocm_saving_tracker_stat'.stat_type
+	toColumn: dim_ocm01_stat_type.stat_type
+
+relationship a2761bb7-1b47-450b-933a-47f3f34797e5
+	fromColumn: 'dwd ocm_saving_tracker_stat'.dimension_name
+	toColumn: dim_ocm01_cost_group.cost_group_name
+
+relationship 74ad77db-1818-4af1-9e22-79f6963188f7
+	fromColumn: 'dwd ocm_saving_tracker_stat'.dimension_name
+	toColumn: dim_ocm01_cost_cluster.cost_cluster_name
+
+relationship AutoDetected_ca4ac537-d839-480d-b39e-dfc30119f4e1
+	fromColumn: 'Saving Initiative DB'.'Cost Cluster'
+	toColumn: dim_ocm01_cost_cluster.cost_cluster_name
+
+relationship AutoDetected_957735c2-c167-42f7-8644-5957be3c30a8
+	fromColumn: 'Saving Initiative DB'.'Cost Group'
+	toColumn: dim_ocm01_cost_group.cost_group_name
+
+relationship c7b6504f-fcf4-7127-bd9a-44b62efa3eff
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: 'Saving Initiative DB'.Year2
+	toColumn: 'dwd ocm_saving_tracker_stat'.year
+
